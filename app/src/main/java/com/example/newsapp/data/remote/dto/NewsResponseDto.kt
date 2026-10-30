@@ -1,4 +1,4 @@
-package com.example.newsapp.data.remote
+package com.example.newsapp.data.remote.dto
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

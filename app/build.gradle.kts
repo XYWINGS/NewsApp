@@ -44,6 +44,8 @@ android {
 dependencies {
 //  Retrofitfor networking
     implementation(libs.retrofit)
+//    Serilazation for tetrofit
+    implementation(libs.converter.kotlinx.serialization)
 //  Room databse dependency
     implementation(libs.androidx.room.runtime)
 //  Optional - Kotlin Extensions and Coroutines support for Room
