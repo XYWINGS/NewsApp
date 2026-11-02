@@ -2,7 +2,7 @@ package com.example.newsapp.domain.repository
 
 import com.example.newsapp.domain.entity.Article
 import kotlinx.coroutines.flow.Flow
-
+/*Use Alt + Enter to generate the repo*/
 interface NewsRepository {
 
     fun getAllSubscriptions(): Flow<List<String>>

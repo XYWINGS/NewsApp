@@ -13,7 +13,7 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface NewsDao {
     @Query("SELECT * FROM subscriptions")
-    suspend fun getAlSubscriptions(): Flow<List<SubscriptionDbModel>>
+    fun getAllSubscriptions(): Flow<List<SubscriptionDbModel>>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun addSubscription(subscriptionDbModel: SubscriptionDbModel)

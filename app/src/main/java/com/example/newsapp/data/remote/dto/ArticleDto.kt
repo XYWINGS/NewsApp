@@ -6,19 +6,19 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class ArticleDto(
     @SerialName("author")
-    val author: String? = "",
+    val author: String = "",
     @SerialName("content")
-    val content: String? = "",
+    val content: String = "",
     @SerialName("description")
-    val description: String? = "",
+    val description: String = "",
     @SerialName("publishedAt")
     val publishedAt: String = "",
     @SerialName("source")
-    val source: SourceDto? = SourceDto(),
+    val source: SourceDto = SourceDto(),
     @SerialName("title")
-    val title: String? = "",
+    val title: String = "",
     @SerialName("url")
-    val url: String? = "",
+    val url: String = "",
     @SerialName("urlToImage")
     val urlToImage: String? = ""
 )

@@ -3,7 +3,7 @@ package com.example.newsapp.domain.usecase
 import com.example.newsapp.domain.repository.NewsRepository
 import javax.inject.Inject
 
-class RemoveSubscription @Inject constructor(
+class RemoveSubscriptionUseCase @Inject constructor(
     private val newsRepository: NewsRepository
 ) {
     suspend operator fun invoke(topic: String) {

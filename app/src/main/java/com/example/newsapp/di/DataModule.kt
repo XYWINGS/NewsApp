@@ -5,6 +5,9 @@ import androidx.room.Room
 import com.example.newsapp.data.dao.NewsDao
 import com.example.newsapp.data.database.NewsDatabase
 import com.example.newsapp.data.remote.service.NewsApiService
+import com.example.newsapp.data.repository.NewsRepositoryImpl
+import com.example.newsapp.domain.repository.NewsRepository
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -23,60 +26,69 @@ import kotlin.jvm.java
 @InstallIn(SingletonComponent::class)
 interface DataModule {
 
-    @Provides
+    @Binds
     @Singleton
-    fun provideJson(): Json {
-        return Json {
-            ignoreUnknownKeys = true
-            coerceInputValues = true
+    fun bindNewsRepository(
+        impl: NewsRepositoryImpl
+    ): NewsRepository
+
+    companion object {
+
+        @Provides
+        @Singleton
+        fun provideJson(): Json {
+            return Json {
+                ignoreUnknownKeys = true
+                coerceInputValues = true
+            }
         }
-    }
 
-    @Provides
-    @Singleton
-    fun provideConverterFactory(json: Json): Converter.Factory {
-        return json.asConverterFactory(
-            "application/json".toMediaType()
-        )
-    }
+        @Provides
+        @Singleton
+        fun provideConverterFactory(json: Json): Converter.Factory {
+            return json.asConverterFactory(
+                "application/json".toMediaType()
+            )
+        }
 
-    @Provides
-    @Singleton
-    fun provideRetrofit(
-        converterFactory: Converter.Factory
-    ): Retrofit {
-        return Retrofit.Builder()
-            .baseUrl("https://newsapi.org/")
-            .addConverterFactory(converterFactory)
-            .build()
-    }
+        @Provides
+        @Singleton
+        fun provideRetrofit(
+            converterFactory: Converter.Factory
+        ): Retrofit {
+            return Retrofit.Builder()
+                .baseUrl("https://newsapi.org/")
+                .addConverterFactory(converterFactory)
+                .build()
+        }
 
-    @Provides
-    @Singleton
-    fun provideApiService(
-        retrofit: Retrofit
-    ): NewsApiService {
-        return retrofit.create()
-    }
+        @Provides
+        @Singleton
+        fun provideApiService(
+            retrofit: Retrofit
+        ): NewsApiService {
+            return retrofit.create()
+        }
 
-    @Singleton
-    @Provides
-    fun provideDataBase(
-        @ApplicationContext context: Context
-    ): NewsDatabase {
-        return Room.databaseBuilder(
-            context = context,
-            klass = NewsDatabase::class.java,
-            name = "news-database"
-        ).fallbackToDestructiveMigration(dropAllTables = true)
-            .build()
-    }
+        @Singleton
+        @Provides
+        fun provideDataBase(
+            @ApplicationContext context: Context
+        ): NewsDatabase {
+            return Room.databaseBuilder(
+                context = context,
+                klass = NewsDatabase::class.java,
+                name = "news-database"
+            ).fallbackToDestructiveMigration(dropAllTables = true)
+                .build()
+        }
 
-    @Singleton
-    @Provides
-    fun providedNewsDao(
-        database: NewsDatabase
-    ): NewsDao {
-        return database.newsDao()
+        @Singleton
+        @Provides
+        fun providedNewsDao(
+            database: NewsDatabase
+        ): NewsDao {
+            return database.newsDao()
+        }
     }
 }

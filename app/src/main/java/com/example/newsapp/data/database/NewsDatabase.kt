@@ -8,7 +8,7 @@ import com.example.newsapp.data.local.SubscriptionDbModel
 
 @Database(
     entities = [ArticleDbModel::class, SubscriptionDbModel::class],
-    version = 1,
+    version = 2,
     exportSchema = false
 )
 abstract class NewsDatabase : RoomDatabase() {
