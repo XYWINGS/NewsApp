@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">NewsApp</string>
+    <string name="subscription_title">My News</string>
+    <string name="update_articles">Update Articles</string>
 </resources>
