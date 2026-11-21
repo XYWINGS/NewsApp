@@ -42,6 +42,14 @@ android {
 }
 
 dependencies {
+//  Work manager
+    implementation(libs.androidx.work.runtime.ktx)
+//  Work manager hilt dipendency injection
+    implementation(libs.androidx.hilt.work)
+    ksp(libs.androidx.hilt.compiler)
+//  Coill depedencies for asyncimage
+    implementation(libs.coil.compose)
+    implementation(libs.coil.network.okhttp)
 //  Retrofitfor networking
     implementation(libs.retrofit)
 //    Serilazation for tetrofit
@@ -63,7 +71,7 @@ dependencies {
 //-------------------------------------
 //  Hilt navigations compose for viewmodel injection
     implementation(libs.androidx.hilt.navigation.compose)
-//    JSON serialization depedency
+//  JSON serialization depedency
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.androidx.compose.foundation)
     implementation(libs.androidx.lifecycle.viewmodel.compose)

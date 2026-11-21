@@ -1,6 +1,10 @@
 package com.example.newsapp.data.repository
 
 import android.util.Log
+import androidx.work.ExistingPeriodicWorkPolicy
+import androidx.work.PeriodicWorkRequestBuilder
+import androidx.work.WorkManager
+import com.example.newsapp.data.background.RefreshDataWorker
 import com.example.newsapp.data.dao.NewsDao
 import com.example.newsapp.data.local.ArticleDbModel
 import com.example.newsapp.data.local.SubscriptionDbModel
@@ -15,12 +19,18 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class NewsRepositoryImpl @Inject constructor(
     private val newsDao: NewsDao,
-    private val newsApiService: NewsApiService
+    private val newsApiService: NewsApiService,
+    private val workManager: WorkManager
 ) : NewsRepository {
+
+    init {
+        startBackgroundRefresh()
+    }
 
     override fun getAllSubscriptions(): Flow<List<String>> {
         return newsDao.getAllSubscriptions().map { subscriptions ->
@@ -76,5 +86,17 @@ class NewsRepositoryImpl @Inject constructor(
 
     override suspend fun clearAllArticles(topics: List<String>) {
         newsDao.deleteArticlesByTopics(topics = topics)
+    }
+
+    private fun startBackgroundRefresh() {
+        val request = PeriodicWorkRequestBuilder<RefreshDataWorker>(
+            repeatInterval = 15L, repeatIntervalTimeUnit = TimeUnit.MINUTES
+        ).build()
+
+        workManager.enqueueUniquePeriodicWork(
+            uniqueWorkName = "RefreshData",
+            existingPeriodicWorkPolicy = ExistingPeriodicWorkPolicy.CANCEL_AND_REENQUEUE,
+            request = request
+        )
     }
 }

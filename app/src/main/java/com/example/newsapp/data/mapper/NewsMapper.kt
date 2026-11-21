@@ -25,7 +25,7 @@ fun List<ArticleDbModel>.toEntities(): List<Article> {
         Article(
             title = it.title,
             description = it.description,
-            imageUrl = it.url,
+            imageUrl = it.imageUrl,
             sourceName = it.sourceName,
             publishedAt = it.publishedAt,
             url = it.url

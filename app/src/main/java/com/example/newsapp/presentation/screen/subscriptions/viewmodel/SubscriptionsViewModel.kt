@@ -118,7 +118,7 @@ class SubscriptionsViewModel @Inject constructor(
 }
 
 
-/*Actions user can invoke: There will be many button on the screen, but if they doesn't change the
+/*Actions user can invoke: There will be many button on the screen, but if they don't change the
 * screen state and focused on the navigation, they belong to the navigation layer
 */
 sealed interface SubscriptionCommand {
